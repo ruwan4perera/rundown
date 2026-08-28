@@ -1,0 +1,25 @@
+{
+  "event": {
+    "name": "Untitled Event",
+    "startTime": "",
+    "date": ""
+  },
+  "items": [],
+  "currentIndex": null,
+  "timer": {
+    "running": false,
+    "remainingSec": 0,
+    "totalSec": 0,
+    "lastTick": null,
+    "overrun": false
+  },
+  "message": {
+    "text": "",
+    "visible": false,
+    "target": "all"
+  },
+  "timerVisible": true,
+  "settings": {
+    "autoSaveIntervalSec": 30
+  }
+}
