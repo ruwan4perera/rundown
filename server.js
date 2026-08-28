@@ -28,6 +28,11 @@ app.use((req, res, next) => {
 });
 app.use(express.static(path.join(__dirname, 'public')));
 
+// index.html lives at the project root (not inside public/) so it's easy to find,
+// but we serve it via an explicit route rather than statically serving the whole
+// root directory — that would also expose server.js, data/rundown.json, etc.
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+
 // ---------- State ----------
 function defaultState() {
   return {
