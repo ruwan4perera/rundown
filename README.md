@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/31541070/README.md)
 # Event Rundown App
 
 A local rundown control system for live events — load your rundown from Excel, run it from one control screen, and display synced output pages for each department.

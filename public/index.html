@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rundown Control</title>
+<link rel="stylesheet" href="control.css">
+</head>
+<body>
+<div id="projectModal" class="modalOverlay hidden">
+  <div class="modal">
+    <h2>Project Settings</h2>
+    <div class="noteField"><span>Event Name</span><input id="projEventName" type="text"></div>
+    <div class="noteField"><span>Event Date</span><input id="projEventDate" type="date"></div>
+    <div class="noteField"><span>Scheduled Start Time</span><input id="projStartTime" type="time"></div>
+    <div class="noteField"><span>Auto-save interval (seconds)</span><input id="projAutoSave" type="number" min="5" step="5"></div>
+    <div class="modalBtns">
+      <button id="projectCancelBtn">Cancel</button>
+      <button id="projectSaveBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="lanBanner" class="lanBanner hidden"></div>
+
+<header class="mainToolbar">
+  <div class="tbSection tbEvent">
+    <h1 id="eventName">Untitled Event</h1>
+  </div>
+
+  <div class="tbSection tbActions">
+    <label class="fileBtn">
+      Load Rundown (Excel)
+      <input type="file" id="fileInput" accept=".xlsx,.xls" hidden>
+    </label>
+    <button id="addItemBtn">+ Add Item</button>
+    <button id="projectBtn">⚙ Project</button>
+  </div>
+
+  <div class="tbSection tbOutputs">
+    <a target="_blank" href="/output.html?role=sound">Sound</a>
+    <a target="_blank" href="/output.html?role=lights">Lights</a>
+    <a target="_blank" href="/output.html?role=video">Video</a>
+    <a target="_blank" href="/output.html?role=backstage">Backstage</a>
+    <a target="_blank" href="/output.html?role=compere">Compere</a>
+    <a target="_blank" href="/output.html?role=client">Client</a>
+    <a target="_blank" href="/output.html?role=master">Master</a>
+    <a target="_blank" href="/output.html?role=controller">Controller</a>
+    <a target="_blank" href="/output.html?role=public">Public Display</a>
+    <a target="_blank" href="/qr.html">📱 QR Codes</a>
+  </div>
+
+  <div class="tbSection tbClocks">
+    <div class="clockCol">
+      <div id="endTime" class="endTime"></div>
+      <div id="clock" class="clock">--:--:--</div>
+    </div>
+  </div>
+</header>
+
+<section class="liveBar">
+  <div class="liveBarLeft">
+    <div class="label">▶ NOW LIVE</div>
+    <div id="liveItemName" class="itemName">No item live</div>
+  </div>
+
+  <div class="liveBarTimer">
+    <div class="timerTriple">
+      <div class="timerCell"><span class="timerCellLabel">Duration</span><b id="durationDisplay">00:00</b></div>
+      <div class="timerCell main"><span class="timerCellLabel">Remaining</span><b id="timerDisplay" class="timerDisplay">00:00</b></div>
+      <div class="timerCell"><span class="timerCellLabel">Elapsed</span><b id="elapsedDisplay">00:00</b></div>
+    </div>
+  </div>
+
+  <div class="liveBarBtns">
+    <button id="prevBtn">⏮ Prev</button>
+    <button id="startBtn">▶ Start</button>
+    <button id="pauseBtn">⏸ Pause</button>
+    <button id="resetBtn">⟲ Reset</button>
+    <button id="minus1">-1m</button>
+    <button id="plus1">+1m</button>
+    <button id="nextBtn">Next ⏭</button>
+    <button id="toggleTimerBtn">👁 Hide Timer</button>
+  </div>
+</section>
+
+<main>
+  <div class="rundownPane">
+    <table id="rundownTable">
+      <thead>
+        <tr>
+          <th></th>
+          <th>#</th>
+          <th>Item</th>
+          <th>Presenter</th>
+          <th>Duration</th>
+          <th>Notes (general)</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="rundownBody"></tbody>
+    </table>
+  </div>
+
+  <div class="controlPane">
+    <div class="nowBox">
+      <div class="label">EDITING</div>
+      <div id="editingItemName" class="itemName">Click a row to view/edit its notes &amp; cues</div>
+      <button id="makeLiveBtn" class="makeLiveBtn">⏵ Make This Item Live</button>
+    </div>
+
+    <div class="notesBox" id="notesEditor">
+      <div class="label">Item Notes (edit)</div>
+      <div class="noteField"><span>General</span><textarea data-field="general"></textarea></div>
+      <div class="noteField"><span>Sound</span><textarea data-field="sound"></textarea></div>
+      <div class="noteField"><span>Lights</span><textarea data-field="lights"></textarea></div>
+      <div class="noteField"><span>Video</span><textarea data-field="video"></textarea></div>
+      <div class="noteField"><span>Backstage</span><textarea data-field="backstage"></textarea></div>
+    </div>
+
+    <div class="cuesBox" id="cuesEditor">
+      <div class="label">Cue Timeline (offsets within this item — like Quepilot). Use mm.ss, e.g. 1.30</div>
+      <div class="cueTimelineWrap">
+        <div id="cueNextCountdown" class="nextCueCountdown hidden"></div>
+        <div id="cueRuler" class="cueRuler"></div>
+        <div id="cueTimelineBar" class="cueTimelineBar">
+          <div id="cuePlayhead" class="cuePlayhead"></div>
+        </div>
+      </div>
+      <div id="cuesList"></div>
+      <div class="cueAddRow">
+        <input id="cueTime" type="text" placeholder="mm.ss" style="width:70px">
+        <input id="cueLabel" type="text" placeholder="e.g. Confetti + haze cue" style="flex:1">
+        <select id="cueTarget">
+          <option value="all">All</option>
+          <option value="sound">Sound</option>
+          <option value="lights">Lights</option>
+          <option value="video">Video</option>
+          <option value="backstage">Backstage</option>
+        </select>
+        <button id="cueAddBtn">+ Add Cue</button>
+      </div>
+    </div>
+
+    <div class="messageBox">
+      <div class="label">Send Message to Output Screens</div>
+      <input type="text" id="messageText" placeholder="e.g. STAND BY / RUNNING LATE 5 MIN">
+      <select id="messageTarget">
+        <option value="all">All outputs</option>
+        <option value="sound">Sound</option>
+        <option value="lights">Lights</option>
+        <option value="video">Video</option>
+        <option value="backstage">Backstage</option>
+        <option value="compere">Compere</option>
+        <option value="client">Client</option>
+        <option value="master">Master</option>
+      </select>
+      <div>
+        <button id="msgShowBtn">Show</button>
+        <button id="msgHideBtn">Hide</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="mainBottomTimelineBar" class="mainBottomTimelineBar">
+  <div class="bottomTimelineHeader">
+    <span id="mainBottomTimelineTitle">CUE TIMELINE</span>
+    <span id="mainNextCueCountdown" class="nextCueCountdown hidden"></span>
+    <div class="timelineModeToggle">
+      <button id="mainFitModeBtn" class="modeBtn active">Fit</button>
+      <button id="mainScrollModeBtn" class="modeBtn">Scroll</button>
+    </div>
+  </div>
+  <div id="mainBottomScroller" class="bottomTimelineScroller">
+    <div id="mainBottomRuler" class="cueRuler"></div>
+    <div id="mainBottomTrack" class="cueTimelineBar">
+      <div id="mainBottomPlayhead" class="cuePlayhead"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="control.js"></script>
+</body>
+</html>

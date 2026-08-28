@@ -1,0 +1,214 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: #14161a;
+  color: #e8e8ea;
+}
+.lanBanner {
+  background: #1a2e3f; color: #9adcff; border-bottom: 1px solid #2b6cb0;
+  padding: 8px 20px; font-size: 13px; text-align: center;
+}
+.lanBanner.hidden { display: none; }
+.lanBanner b { color: #fff; }
+
+.mainToolbar {
+  display: flex; align-items: center; gap: 18px;
+  padding: 10px 20px;
+  background: #1c1f26;
+  border-bottom: 1px solid #2a2e37;
+  flex-wrap: wrap;
+}
+.tbSection { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tbEvent { min-width: 140px; }
+.tbEvent h1 { font-size: 17px; margin: 0; white-space: nowrap; }
+.tbActions { border-right: 1px solid #2a2e37; padding-right: 18px; }
+.tbOutputs { border-right: 1px solid #2a2e37; padding-right: 18px; flex: 1; }
+.tbOutputs a {
+  color: #9adcff; text-decoration: none; padding: 6px 10px; border: 1px solid #2a2e37; border-radius: 6px; font-size: 13px; white-space: nowrap;
+}
+.tbOutputs a:hover { background: #262b34; }
+.tbClocks { margin-left: auto; }
+.clock { font-size: 22px; font-variant-numeric: tabular-nums; font-weight: 600; color: #7fd1ff; }
+
+.fileBtn, button {
+  background: #2b6cb0;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.fileBtn { background: #38784f; }
+button:hover, .fileBtn:hover { filter: brightness(1.1); }
+
+.liveBar {
+  display: flex; align-items: center; gap: 24px;
+  padding: 12px 24px;
+  background: #1a2e14; border-bottom: 2px solid #3d6b2c;
+  transition: background 0.3s, border-color 0.3s;
+}
+.liveBar.overrun {
+  background: #3a1414; border-bottom-color: #8f2b2b;
+  animation: overrunBarPulse 1.4s infinite;
+}
+@keyframes overrunBarPulse {
+  0%, 100% { background: #3a1414; }
+  50% { background: #591c1c; }
+}
+.liveBarLeft { min-width: 200px; }
+.liveBarLeft .label { color: #8bff9d; }
+.liveBarLeft .itemName { font-size: 22px; margin-bottom: 0; }
+
+.liveBarTimer { flex: 1; display: flex; justify-content: center; }
+.timerTriple { display: flex; align-items: flex-end; gap: 36px; }
+.timerCell { text-align: center; }
+.timerCellLabel { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #8b93a1; margin-bottom: 2px; }
+.timerCell b { font-size: 22px; font-variant-numeric: tabular-nums; color: #cfd3da; }
+.timerCell.main b, .timerCell.main .timerDisplay { font-size: 52px; color: #7fd1ff; }
+.timerCell.main .timerCellLabel { font-size: 12px; }
+.timerDisplay.overrun { color: #ff0000; text-shadow: 0 0 12px rgba(255,0,0,0.7); animation: overrunPulse 1s infinite; }
+@keyframes overrunPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+.liveBarBtns { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.makeLiveBtn { background: #38784f; margin-top: 6px; width: 100%; }
+
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 16px;
+  padding: 16px;
+}
+.rundownPane { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: #1c1f26; border-radius: 8px; overflow: hidden; }
+th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #262b34; font-size: 13px; }
+th { background: #21252d; color: #9aa1ad; font-weight: 600; }
+tr.current { background: #29431f; }
+tr.done { opacity: 0.5; }
+tr.editing { outline: 2px solid #2b6cb0; outline-offset: -2px; }
+tr[draggable="true"] td:not(.dragHandle) { cursor: pointer; }
+tr[draggable="true"] { cursor: grab; }
+td input, td textarea {
+  background: #14161a; color: #e8e8ea; border: 1px solid #2a2e37; border-radius: 4px; padding: 4px 6px; font-size: 13px; width: 100%;
+}
+.dragHandle { cursor: grab; color: #6b7280; }
+.selectBtn { background: #444; padding: 4px 8px; font-size: 12px; }
+.delBtn { background: #8b3a3a; padding: 4px 8px; font-size: 12px; }
+
+.controlPane { display: flex; flex-direction: column; gap: 14px; }
+.nowBox, .notesBox, .messageBox {
+  background: #1c1f26; border: 1px solid #2a2e37; border-radius: 8px; padding: 14px;
+}
+.label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #8b93a1; margin-bottom: 6px; }
+.itemName { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+
+.noteField { margin-bottom: 8px; }
+.noteField span { font-size: 12px; color: #9aa1ad; display: block; margin-bottom: 3px; }
+.noteField textarea { width: 100%; min-height: 40px; resize: vertical; }
+
+.messageBox input { width: 100%; padding: 8px; margin-bottom: 8px; border-radius: 4px; border: 1px solid #2a2e37; background: #14161a; color: #e8e8ea; }
+.messageBox select { width: 100%; padding: 6px; margin-bottom: 8px; background: #14161a; color: #e8e8ea; border: 1px solid #2a2e37; border-radius: 4px; }
+.messageBox div { display: flex; gap: 8px; }
+
+.cuesBox .cueRow {
+  display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #22262f; font-size: 13px;
+}
+.cuesBox .cueRow .cueTime { font-variant-numeric: tabular-nums; color: #7fd1ff; font-weight: 700; width: 46px; }
+.cuesBox .cueRow .cueTarget { color: #9aa1ad; font-size: 11px; text-transform: uppercase; border: 1px solid #2a2e37; padding: 2px 6px; border-radius: 4px; }
+.cuesBox .cueRow .cueLabel { flex: 1; }
+.cuesBox .cueRow .cueDel { background: #8b3a3a; padding: 3px 8px; font-size: 11px; }
+.cueAddRow { display: flex; gap: 6px; margin-top: 8px; }
+
+.cueTimelineWrap { margin-bottom: 10px; }
+
+/* Ruler: time ticks with labels */
+.cueRuler { position: relative; height: 22px; margin-bottom: 2px; border-bottom: 1px solid #2a2e37; }
+.rulerTick { position: absolute; bottom: 0; width: 1px; height: 6px; background: #444; }
+.rulerTick.major { height: 10px; background: #667; }
+.rulerLabel {
+  position: absolute; bottom: 12px; transform: translateX(-50%); font-size: 10px; color: #7d8697; white-space: nowrap;
+}
+
+/* Segmented colored blocks, spanning cue-to-cue like a playlist timeline */
+.cueTimelineBar {
+  position: relative; height: 56px; background: #14161a; border: 1px solid #2a2e37; border-radius: 6px; margin-bottom: 4px; overflow: hidden;
+}
+.cueSegment {
+  position: absolute; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center;
+  padding: 4px 8px; overflow: hidden; border-right: 2px solid #0b0c10; cursor: pointer;
+}
+.cueSegment .segIdx { font-size: 15px; font-weight: 800; color: rgba(255,255,255,0.95); line-height: 1; }
+.cueSegment .segLabel { font-size: 12px; color: rgba(255,255,255,0.9); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cueSegment .segSub { font-size: 10px; color: rgba(255,255,255,0.65); font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cueSegment.sound { background: #2b6f8f; }
+.cueSegment.lights { background: #8a6d1f; }
+.cueSegment.video { background: #b0562c; }
+.cueSegment.backstage { background: #5c3b96; }
+.cueSegment.all { background: #2f7d43; }
+.cueSegment.pre { background: #23262e; }
+.cueSegment.done { opacity: 0.45; }
+
+.cuePlayhead {
+  position: absolute; top: -3px; bottom: -3px; width: 2px; background: #ff5c5c; left: 0%;
+  box-shadow: 0 0 5px #ff5c5c; z-index: 5;
+}
+
+/* Persistent bottom bar on the main control page */
+.mainBottomTimelineBar {
+  position: fixed; left: 0; right: 0; bottom: 0; height: 150px;
+  background: #16181d; border-top: 2px solid #2a2e37; z-index: 20;
+  display: flex; flex-direction: column;
+}
+.mainBottomTimelineBar .bottomTimelineHeader {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  padding: 8px 20px; font-size: 12px; letter-spacing: 0.1em; color: #8b93a1;
+}
+.mainBottomTimelineBar .bottomTimelineHeader #mainBottomTimelineTitle { flex: 1; }
+.mainBottomTimelineBar .timelineModeToggle { display: flex; gap: 6px; }
+.mainBottomTimelineBar .modeBtn {
+  background: #21252d; color: #9aa1ad; border: 1px solid #2a2e37; padding: 3px 12px; border-radius: 5px; font-size: 11px; cursor: pointer;
+}
+.mainBottomTimelineBar .modeBtn.active { background: #2b6cb0; color: white; border-color: #2b6cb0; }
+.mainBottomTimelineBar .bottomTimelineScroller { flex: 1; overflow-x: auto; overflow-y: hidden; padding: 0 20px 10px; }
+.mainBottomTimelineBar .cueRuler,
+.mainBottomTimelineBar .cueTimelineBar { min-width: 100%; }
+.mainBottomTimelineBar .cueTimelineBar.scrollMode,
+.mainBottomTimelineBar .cueRuler.scrollMode { min-width: var(--track-width, 1200px); }
+body { padding-bottom: 150px; }
+
+.clockCol { text-align: right; }
+.endTime { font-size: 12px; color: #8b93a1; }
+
+.nextCueCountdown {
+  font-size: 12px; font-weight: 700; color: #ffd479; background: rgba(255,212,121,0.12);
+  border: 1px solid rgba(255,212,121,0.4); border-radius: 5px; padding: 3px 10px; white-space: nowrap;
+}
+.nextCueCountdown.hidden { display: none; }
+.cueTimelineWrap { position: relative; }
+.cueTimelineWrap .nextCueCountdown { position: absolute; top: -2px; left: 0; z-index: 6; }
+.cueTimelineWrap .cueRuler { margin-top: 24px; }
+
+.cueTimelineWrap { margin-bottom: 10px; }
+.cueAddRow input, .cueAddRow select {
+  background: #14161a; color: #e8e8ea; border: 1px solid #2a2e37; border-radius: 4px; padding: 6px; font-size: 12px;
+}
+.cueAddRow button { white-space: nowrap; }
+
+.modalOverlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 100;
+}
+.modalOverlay.hidden { display: none; }
+.modal {
+  background: #1c1f26; border: 1px solid #2a2e37; border-radius: 10px; padding: 24px; width: 360px;
+}
+.modal h2 { margin-top: 0; font-size: 16px; }
+.modal input { width: 100%; padding: 8px; background: #14161a; color: #e8e8ea; border: 1px solid #2a2e37; border-radius: 4px; }
+.modalBtns { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+.modalBtns button:first-child { background: #444; }

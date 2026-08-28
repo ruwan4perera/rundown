@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rundown Output</title>
+<link rel="stylesheet" href="output.css">
+</head>
+<body>
+<div id="messageOverlay" class="messageOverlay hidden">
+  <div id="messageText"></div>
+</div>
+
+<header>
+  <div id="roleLabel" class="roleLabel">SOUND</div>
+  <div id="eventNamePublic" class="eventNamePublic hidden"></div>
+  <div id="clock" class="clock">--:--:--</div>
+</header>
+
+<div id="contentArea">
+
+<main id="standardView">
+  <section class="block last">
+    <div class="tag">LAST</div>
+    <div id="lastItem" class="itemTitle">-</div>
+  </section>
+
+  <section class="block current">
+    <div class="tag">CURRENT</div>
+    <div id="currentItem" class="itemTitle big">-</div>
+    <div id="timer" class="timer">00:00</div>
+    <div class="timerSub">
+      <span>Elapsed <b id="elapsedTime">00:00</b></span>
+      <span>Remaining <b id="remainingTime">00:00</b></span>
+    </div>
+    <div id="currentNote" class="note"></div>
+  </section>
+
+  <section class="block next">
+    <div class="tag" id="nextTag">NEXT</div>
+    <div id="nextItem" class="itemTitle">-</div>
+    <div id="nextNote" class="note"></div>
+    <div id="nextList" class="nextList"></div>
+  </section>
+</main>
+
+<main id="lineupView" class="hidden">
+  <div class="lineupCurrentRow">
+    <div class="tag">CURRENT</div>
+    <div id="lineupCurrentItem" class="itemTitle big">-</div>
+    <div class="lineupTimerCol">
+      <div id="lineupTimer" class="timer">00:00</div>
+      <div class="timerSub">
+        <span>Elapsed <b id="lineupElapsed">00:00</b></span>
+        <span>Remaining <b id="lineupRemaining">00:00</b></span>
+      </div>
+    </div>
+  </div>
+  <div id="lineupList" class="lineupList"></div>
+</main>
+
+<main id="controllerView" class="hidden controllerGrid">
+  <section class="ctrlCol ctrlMain">
+    <div class="tag">LAST</div>
+    <div id="ctrlLastItem" class="itemTitle">-</div>
+
+    <div class="tag" style="margin-top:14px;">CURRENT</div>
+    <div id="ctrlCurrentItem" class="itemTitle big">-</div>
+    <div id="ctrlTimer" class="timer">00:00</div>
+    <div class="timerSub">
+      <span>Elapsed <b id="ctrlElapsed">00:00</b></span>
+      <span>Remaining <b id="ctrlRemaining">00:00</b></span>
+    </div>
+
+    <div class="tag" style="margin-top:14px;">NEXT 5</div>
+    <div id="ctrlNextList" class="nextList"></div>
+  </section>
+
+  <section class="ctrlCol ctrlNotes">
+    <div class="tag">DEPARTMENT NOTES — CURRENT ITEM</div>
+    <div class="deptNoteRow"><span class="deptLabel sound">SOUND</span><span id="ctrlNoteSound"></span></div>
+    <div class="deptNoteRow"><span class="deptLabel lights">LIGHTS</span><span id="ctrlNoteLights"></span></div>
+    <div class="deptNoteRow"><span class="deptLabel video">VIDEO</span><span id="ctrlNoteVideo"></span></div>
+    <div class="deptNoteRow"><span class="deptLabel backstage">BACKSTAGE</span><span id="ctrlNoteBackstage"></span></div>
+    <div class="deptNoteRow"><span class="deptLabel general">GENERAL</span><span id="ctrlNoteGeneral"></span></div>
+  </section>
+</main>
+
+<main id="publicView" class="hidden">
+  <div class="publicCurrent">
+    <div id="publicItem" class="itemTitle big">-</div>
+    <div id="publicTimer" class="timer">00:00</div>
+  </div>
+  <div class="publicNext">
+    <div class="tag">UP NEXT</div>
+    <div id="publicNextItem" class="itemTitle">-</div>
+  </div>
+</main>
+
+</div>
+
+<div id="bottomTimelineBar" class="bottomTimelineBar">
+  <div class="bottomTimelineHeader">
+    <span id="bottomTimelineTitle">CUE TIMELINE</span>
+    <span id="nextCueCountdown" class="nextCueCountdown hidden"></span>
+    <div class="timelineModeToggle">
+      <button id="fitModeBtn" class="modeBtn active">Fit</button>
+      <button id="scrollModeBtn" class="modeBtn">Scroll</button>
+    </div>
+  </div>
+  <div id="bottomTimelineScroller" class="bottomTimelineScroller">
+    <div id="bottomTimelineTrack" class="bottomTimelineTrack">
+      <div id="bottomPlayhead" class="bottomPlayhead"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="output.js"></script>
+</body>
+</html>
